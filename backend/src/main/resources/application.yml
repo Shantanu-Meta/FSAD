@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: admission-system
+  profiles:
+    active: dev
+  jackson:
+    serialization:
+      indent-output: true
+
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 30m
+
+# Role names used across the app
+app:
+  roll-number:
+    sequence-padding: 3
+  invoice:
+    prefix: INV

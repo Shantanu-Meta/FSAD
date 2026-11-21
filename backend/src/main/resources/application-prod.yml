@@ -1,0 +1,26 @@
+# ===== PRODUCTION PROFILE =====
+# PostgreSQL (default). Switch to MySQL by overriding the datasource properties
+# via environment variables. Zero code changes required to switch.
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/admissiondb}
+    driver-class-name: ${DB_DRIVER:org.postgresql.Driver}
+    username: ${DB_USERNAME:admission}
+    password: ${DB_PASSWORD:admission}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: ${DB_DIALECT:org.hibernate.dialect.PostgreSQLDialect}
+
+# --- To run on MySQL instead, set these environment variables: ---
+# DB_URL=jdbc:mysql://localhost:3306/admissiondb
+# DB_DRIVER=com.mysql.cj.jdbc.Driver
+# DB_DIALECT=org.hibernate.dialect.MySQLDialect
+
+logging:
+  level:
+    org.springframework.security: WARN
+    com.bits.fsad: INFO

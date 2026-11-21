@@ -1,0 +1,28 @@
+# Backend (Maven / Java)
+backend/target/
+*.class
+
+# Frontend (Node)
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Logs
+*.log
+
+# Env files (never commit real secrets; .env.example is tracked)
+.env
+backend/.env
+frontend/.env
+*.local
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+
+# Playwright artifacts
+.playwright-mcp/
