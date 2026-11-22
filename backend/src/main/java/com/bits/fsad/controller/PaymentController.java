@@ -29,6 +29,7 @@ public class PaymentController {
     }
 
     @GetMapping("/admission/{admissionId}")
+    @PreAuthorize("hasAnyRole('ADMIN','CLERK')")
     public List<Payment> byAdmission(@PathVariable Long admissionId) {
         return paymentService.findByAdmission(admissionId);
     }

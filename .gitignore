@@ -24,5 +24,7 @@ frontend/.env
 # OS
 .DS_Store
 
-# Playwright artifacts
-.playwright-mcp/
+# Root-level node_modules (from Playwright install)
+node_modules/
+package-lock.json
+package.json

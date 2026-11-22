@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Form, Input, Button, Typography, Alert } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
@@ -13,9 +13,9 @@ export default function Login() {
   const [error, setError] = useState(null);
 
   // Already logged in? go to dashboard.
-  if (user) {
-    navigate('/dashboard', { replace: true });
-  }
+  useEffect(() => {
+    if (user) navigate('/dashboard', { replace: true });
+  }, [user, navigate]);
 
   const onFinish = async (values) => {
     setLoading(true);
