@@ -2,7 +2,10 @@ package com.bits.fsad.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -43,6 +46,26 @@ public class GlobalExceptionHandler {
         }
         resp.put("fieldErrors", fields);
         return ResponseEntity.badRequest().body(resp);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Map<String, Object>> handleBadCredentials(BadCredentialsException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(body(HttpStatus.UNAUTHORIZED, "Invalid username or password"));
+    }
+
+    @ExceptionHandler(DisabledException.class)
+    public ResponseEntity<Map<String, Object>> handleDisabled(DisabledException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(body(HttpStatus.UNAUTHORIZED, "Account is disabled"));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, Object>> handleNotReadable(HttpMessageNotReadableException ex) {
+        String msg = ex.getMessage() != null && ex.getMessage().contains("not one of the values accepted")
+                ? "Invalid value: " + ex.getMessage().replaceAll(".*`([^`]+)`.*", "$1")
+                : "Malformed request body";
+        return ResponseEntity.badRequest().body(body(HttpStatus.BAD_REQUEST, msg));
     }
 
     @ExceptionHandler(AccessDeniedException.class)

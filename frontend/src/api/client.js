@@ -18,8 +18,9 @@ api.interceptors.response.use(
     const msg = data?.message || error.message || 'Request failed';
 
     if (status === 401) {
-      // Not on the login page itself
-      if (!window.location.pathname.includes('/login')) {
+      const PUBLIC_PATHS = ['/', '/login'];
+      const isPublic = PUBLIC_PATHS.includes(window.location.pathname);
+      if (!isPublic) {
         window.location.href = '/login';
       }
     } else if (status === 403) {

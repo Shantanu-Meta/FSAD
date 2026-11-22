@@ -30,6 +30,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public Application get(@PathVariable Long id) {
         return applicationService.findById(id);
     }
